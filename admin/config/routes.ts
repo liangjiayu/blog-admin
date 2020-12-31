@@ -43,6 +43,11 @@
     component: './TableList',
   },
   {
+    name: '文章',
+    path: '/article',
+    component: './Article',
+  },
+  {
     path: '/',
     redirect: '/welcome',
   },

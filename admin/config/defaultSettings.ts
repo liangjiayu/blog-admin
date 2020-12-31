@@ -4,6 +4,9 @@ const Settings: LayoutSettings & {
   pwa?: boolean;
   logo?: string;
 } = {
+  menu:{
+    locale:false,
+  },
   navTheme: 'dark',
   // 拂晓蓝
   primaryColor: '#1890ff',
