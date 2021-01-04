@@ -43,9 +43,21 @@
     component: './TableList',
   },
   {
-    name: '文章',
     path: '/article',
-    component: './Article',
+    name: '文章',
+    routes: [
+      {
+        path: '/article/list',
+        name: '文章列表',
+        component: './ArticleList',
+      },
+      {
+        path: '/article/add',
+        // hideInMenu: true,
+        name: '新增文章',
+        component: './ArticleAdd',
+      },
+    ],
   },
   {
     path: '/',

@@ -1,7 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { request } from 'umi';
-import { Table } from 'antd';
+import { request, history } from 'umi';
+import { Table, Button } from 'antd';
+import SiteHeader from '@/components/SiteHeader';
 
 const getListData = (data: any) => {
   return request('/api/article/list', { method: 'post', data });
@@ -71,6 +72,16 @@ const IndexView = () => {
 
   return (
     <div>
+      <SiteHeader title="文章列表">
+        <Button
+          type="primary"
+          onClick={() => {
+            history.push('/article/add');
+          }}
+        >
+          新增文章
+        </Button>
+      </SiteHeader>
       <Table
         columns={columns}
         dataSource={list}
