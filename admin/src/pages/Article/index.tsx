@@ -1,4 +1,5 @@
-import React, { useState, useEffect,useCallback } from 'react';
+/* eslint-disable react-hooks/exhaustive-deps */
+import React, { useState, useEffect } from 'react';
 import { request } from 'umi';
 import { Table } from 'antd';
 
@@ -38,9 +39,9 @@ const IndexView = () => {
     },
   ];
 
-  const fetchList = () => {
+  const fetchList = (query: any) => {
     setLoading(true);
-    getListData({ pageSize: pages.pageSize, pageNum: pages.current }).then((res) => {
+    getListData({ ...query }).then((res) => {
       setLoading(false);
       const { data } = res;
       setList(data.rows);
@@ -52,33 +53,32 @@ const IndexView = () => {
     });
   };
 
-  const fetchBusinesses = useCallback(() => {
-    setLoading(true);
-    getListData({ pageSize: pages.pageSize, pageNum: pages.current }).then((res) => {
-      setLoading(false);
-      const { data } = res;
-      setList(data.rows);
-      setPages({
-        current: data.current,
-        pageSize: data.size,
-        total: data.total,
-      });
-    });
-  }, [])
+  const onChangeTable = (pagination: any) => {
+    const query = {
+      pageSize: pagination.pageSize,
+      pageNum: pagination.current,
+    };
+    fetchList(query);
+  };
 
   useEffect(() => {
-    fetchBusinesses()
-  }, [fetchBusinesses])
-
-  // fetchList();
-
-  // setLoading()
-
-  // useEffect(fetchList, []);
+    const query = {
+      pageSize: pages.pageSize,
+      pageNum: pages.current,
+    };
+    fetchList(query);
+  }, []);
 
   return (
     <div>
-      <Table columns={columns} dataSource={list} rowKey="id" pagination={pages} loading={loading} />
+      <Table
+        columns={columns}
+        dataSource={list}
+        rowKey="id"
+        pagination={pages}
+        loading={loading}
+        onChange={onChangeTable}
+      />
     </div>
   );
 };
