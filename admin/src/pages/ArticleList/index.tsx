@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { request, history } from 'umi';
-import { Table, Button, Card } from 'antd';
+import { Table, Button, Card, Space, Popconfirm } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
 const getListData = (data: any) => {
@@ -12,6 +12,43 @@ const IndexView = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pages, setPages] = useState({ current: 1, pageSize: 10, total: 0 });
+
+  const fetchList = (query: any) => {
+    setLoading(true);
+    getListData({ ...query }).then((res) => {
+      setLoading(false);
+      const { data } = res;
+      setList(data.rows);
+      setPages({
+        current: data.current,
+        pageSize: data.size,
+        total: data.total,
+      });
+    });
+  };
+
+  const onChangeTable = (pagination: any) => {
+    const query = {
+      pageSize: pagination.pageSize,
+      pageNum: pagination.current,
+    };
+    fetchList(query);
+  };
+
+  const onDelete = (id) => {
+    setLoading(true);
+    request('/api/article/del', { method: 'POST', data: { id } }).then(() => {
+      fetchList({ pageSize: pages.pageSize, pageNum: 1 });
+    });
+  };
+
+  useEffect(() => {
+    const query = {
+      pageSize: pages.pageSize,
+      pageNum: pages.current,
+    };
+    fetchList(query);
+  }, []);
 
   const columns = [
     {
@@ -38,37 +75,23 @@ const IndexView = () => {
       title: '封面',
       dataIndex: 'cover',
     },
+    {
+      title: '操作',
+      key: 'action',
+      render: (text, record) => (
+        <Space size="middle">
+          <Popconfirm
+            title="Sure to delete?"
+            onConfirm={() => {
+              onDelete(record.id);
+            }}
+          >
+            <a>删除</a>
+          </Popconfirm>
+        </Space>
+      ),
+    },
   ];
-
-  const fetchList = (query: any) => {
-    setLoading(true);
-    getListData({ ...query }).then((res) => {
-      setLoading(false);
-      const { data } = res;
-      setList(data.rows);
-      setPages({
-        current: data.current,
-        pageSize: data.size,
-        total: data.total,
-      });
-    });
-  };
-
-  const onChangeTable = (pagination: any) => {
-    const query = {
-      pageSize: pagination.pageSize,
-      pageNum: pagination.current,
-    };
-    fetchList(query);
-  };
-
-  useEffect(() => {
-    const query = {
-      pageSize: pages.pageSize,
-      pageNum: pages.current,
-    };
-    fetchList(query);
-  }, []);
 
   return (
     <PageHeaderWrapper>

@@ -32,7 +32,7 @@ export default class ArticleController extends Controller {
 
     // 参数验证
     await this.ctx.helper.validate(formData, {
-      id: { type: 'string', required: true },
+      id: { required: true },
     });
 
     const article = await this.service.article.updateArticle(formData);
@@ -48,7 +48,7 @@ export default class ArticleController extends Controller {
 
     // 参数验证
     await this.ctx.helper.validate(formData, {
-      id: { type: 'string', required: true },
+      id: { required: true },
     });
 
     const article = await this.service.article.getArticleById(formData.id);
@@ -65,7 +65,7 @@ export default class ArticleController extends Controller {
 
     // 参数验证
     await this.ctx.helper.validate(formData, {
-      id: { type: 'string', required: true },
+      id: { required: true },
     });
 
     await this.service.article.delArticleById(formData.id);

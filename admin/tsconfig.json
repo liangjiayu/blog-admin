@@ -16,6 +16,7 @@
     "allowJs": true,
     "skipLibCheck": true,
     "experimentalDecorators": true,
+    "noImplicitAny": false,
     "strict": true,
     "paths": {
       "@/*": ["./src/*"],
