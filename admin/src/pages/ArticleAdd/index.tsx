@@ -1,10 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { request, history } from 'umi';
 import { Form, Input, Button, Card, message } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
 const IndexView = () => {
+  const [form] = Form.useForm();
   const [loading, setLoading] = useState(false);
+  const formData = {
+    id: history.location.query?.id,
+    type: history.location.query?.id ? 'edit' : 'add',
+  };
 
   const layout = {
     labelCol: { span: 4 },
@@ -13,25 +18,49 @@ const IndexView = () => {
     wrapperCol: { offset: 4 },
   };
 
+  const getFormInit = () => {
+    const id = history.location.query?.id;
+    if (!id) {
+      return;
+    }
+    request('/api/article/detail', { method: 'POST', data: { id } }).then((res) => {
+      form.setFieldsValue(res.data);
+    });
+  };
+
   const onFinish = (values: any) => {
     setLoading(true);
-    request('/api/article/create', { method: 'POST', data: values }).then(() => {
-      message.success('提交成功');
-      history.push('/article/list');
-    });
+    if (formData.type === 'add') {
+      request('/api/article/create', { method: 'POST', data: values }).then(() => {
+        message.success('提交成功');
+        history.push('/article/list');
+      });
+    } else {
+      request('/api/article/update', { method: 'POST', data: { ...values, id: formData.id } }).then(
+        () => {
+          message.success('提交成功');
+          history.push('/article/list');
+        },
+      );
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
+  useEffect(() => {
+    getFormInit();
+  }, []);
+
   return (
     <PageHeaderWrapper>
       <Card>
         <Form
+          form={form}
           {...layout}
           name="basic"
-          initialValues={{ remember: true }}
+          initialValues={{}}
           onFinish={onFinish}
           onFinishFailed={onFinishFailed}
         >

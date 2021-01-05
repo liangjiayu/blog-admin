@@ -53,7 +53,7 @@
       },
       {
         path: '/article/add',
-        // hideInMenu: true,
+        hideInMenu: true,
         name: '新增文章',
         component: './ArticleAdd',
       },

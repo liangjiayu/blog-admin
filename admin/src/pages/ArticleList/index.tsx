@@ -80,6 +80,13 @@ const IndexView = () => {
       key: 'action',
       render: (text, record) => (
         <Space size="middle">
+          <a
+            onClick={() => {
+              history.push({ pathname: '/article/add', query: { id: record.id } });
+            }}
+          >
+            详情
+          </a>
           <Popconfirm
             title="Sure to delete?"
             onConfirm={() => {
