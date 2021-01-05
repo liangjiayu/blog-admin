@@ -1,8 +1,8 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
 import { request, history } from 'umi';
-import { Table, Button } from 'antd';
-import SiteHeader from '@/components/SiteHeader';
+import { Table, Button, Card } from 'antd';
+import { PageHeaderWrapper } from '@ant-design/pro-layout';
 
 const getListData = (data: any) => {
   return request('/api/article/list', { method: 'post', data });
@@ -71,26 +71,28 @@ const IndexView = () => {
   }, []);
 
   return (
-    <div>
-      <SiteHeader title="文章列表">
-        <Button
-          type="primary"
-          onClick={() => {
-            history.push('/article/add');
-          }}
-        >
-          新增文章
-        </Button>
-      </SiteHeader>
-      <Table
-        columns={columns}
-        dataSource={list}
-        rowKey="id"
-        pagination={pages}
-        loading={loading}
-        onChange={onChangeTable}
-      />
-    </div>
+    <PageHeaderWrapper>
+      <Card>
+        <div className="site-toolbar">
+          <Button
+            type="primary"
+            onClick={() => {
+              history.push('/article/add');
+            }}
+          >
+            新增文章
+          </Button>
+        </div>
+        <Table
+          columns={columns}
+          dataSource={list}
+          rowKey="id"
+          pagination={pages}
+          loading={loading}
+          onChange={onChangeTable}
+        />
+      </Card>
+    </PageHeaderWrapper>
   );
 };
 
