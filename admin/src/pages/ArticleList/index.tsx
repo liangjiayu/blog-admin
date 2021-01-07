@@ -3,9 +3,16 @@ import React, { useState, useEffect } from 'react';
 import { request, history } from 'umi';
 import { Table, Button, Card, Space, Popconfirm } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import SearchMore from './components/SearchMore';
 
 const getListData = (data: any) => {
   return request('/api/article/list', { method: 'post', data });
+};
+
+let listParams = {
+  pageSize: 10,
+  pageNum: 1,
+  keyword: undefined,
 };
 
 const IndexView = () => {
@@ -13,9 +20,10 @@ const IndexView = () => {
   const [loading, setLoading] = useState(false);
   const [pages, setPages] = useState({ current: 1, pageSize: 10, total: 0 });
 
-  const fetchList = (query: any) => {
+  const fetchList = () => {
+    console.log(listParams);
     setLoading(true);
-    getListData({ ...query }).then((res) => {
+    getListData({ ...listParams }).then((res) => {
       setLoading(false);
       const { data } = res;
       setList(data.rows);
@@ -27,30 +35,37 @@ const IndexView = () => {
     });
   };
 
-  const onChangeTable = (pagination: any) => {
-    const query = {
-      pageSize: pagination.pageSize,
-      pageNum: pagination.current,
+  const onSearch = (values) => {
+    listParams = {
+      pageSize: listParams.pageSize,
+      pageNum: 1,
+      ...values,
     };
-    fetchList(query);
+    fetchList();
+  };
+
+  const onChangeTable = (pagination: any) => {
+    listParams.pageSize = pagination.pageSize;
+    listParams.pageNum = pagination.current;
+    fetchList();
   };
 
   const onDelete = (id) => {
     setLoading(true);
     request('/api/article/del', { method: 'POST', data: { id } }).then(() => {
-      fetchList({ pageSize: pages.pageSize, pageNum: 1 });
+      fetchList();
     });
   };
 
   useEffect(() => {
-    const query = {
-      pageSize: pages.pageSize,
-      pageNum: pages.current,
-    };
-    fetchList(query);
+    fetchList();
   }, []);
 
   const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+    },
     {
       title: '标题',
       dataIndex: 'title',
@@ -103,6 +118,7 @@ const IndexView = () => {
   return (
     <PageHeaderWrapper>
       <Card>
+        <SearchMore onSearch={onSearch} formData={listParams}></SearchMore>
         <div className="site-toolbar">
           <Button
             type="primary"

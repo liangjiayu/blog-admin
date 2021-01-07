@@ -46,6 +46,7 @@
     path: '/article',
     name: '文章',
     routes: [
+      { path: '/article', redirect: '/article/list' },
       {
         path: '/article/list',
         name: '文章列表',

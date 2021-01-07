@@ -67,16 +67,17 @@ export default class Article extends Service {
       };
     }
 
-    const articleList = await this.ctx.model.Article.findAll({
+    const { count, rows } = await this.ctx.model.Article.findAndCountAll({
+      order: [
+        [ 'updatedAt', 'DESC' ],
+      ],
       where: whereOp,
       limit: query.pageSize,
       offset: (query.pageNum - 1) * query.pageSize,
     });
 
-    const count = await this.ctx.model.Article.count();
-
     return {
-      rows: articleList,
+      rows,
       current: query.pageNum,
       size: query.pageSize,
       total: count,
