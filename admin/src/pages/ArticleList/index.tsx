@@ -1,13 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from 'react';
-import { request, history } from 'umi';
+import { history } from 'umi';
 import { Table, Button, Card, Space, Popconfirm } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import SearchMore from './components/SearchMore';
+import { getArticleList, delArticle } from '@/services/article';
 
-const getListData = (data: any) => {
-  return request('/api/article/list', { method: 'post', data });
-};
+import SearchMore from './components/SearchMore';
 
 let listParams = {
   pageSize: 10,
@@ -23,7 +21,7 @@ const IndexView = () => {
   const fetchList = () => {
     console.log(listParams);
     setLoading(true);
-    getListData({ ...listParams }).then((res) => {
+    getArticleList({ ...listParams }).then((res) => {
       setLoading(false);
       const { data } = res;
       setList(data.rows);
@@ -52,7 +50,7 @@ const IndexView = () => {
 
   const onDelete = (id) => {
     setLoading(true);
-    request('/api/article/del', { method: 'POST', data: { id } }).then(() => {
+    delArticle({ id }).then(() => {
       fetchList();
     });
   };

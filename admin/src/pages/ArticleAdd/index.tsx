@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { request, history } from 'umi';
+import { history } from 'umi';
 import { Form, Input, Button, Card, message } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { getArticleInfo, updateArticleInfo, addArticle } from '@/services/article';
 
 const IndexView = () => {
   const [form] = Form.useForm();
@@ -23,7 +24,7 @@ const IndexView = () => {
     if (!id) {
       return;
     }
-    request('/api/article/detail', { method: 'POST', data: { id } }).then((res) => {
+    getArticleInfo({ id }).then((res) => {
       form.setFieldsValue(res.data);
     });
   };
@@ -31,17 +32,15 @@ const IndexView = () => {
   const onFinish = (values: any) => {
     setLoading(true);
     if (formData.type === 'add') {
-      request('/api/article/create', { method: 'POST', data: values }).then(() => {
+      addArticle({ ...values }).then(() => {
         message.success('提交成功');
         history.push('/article/list');
       });
     } else {
-      request('/api/article/update', { method: 'POST', data: { ...values, id: formData.id } }).then(
-        () => {
-          message.success('提交成功');
-          history.push('/article/list');
-        },
-      );
+      updateArticleInfo({ ...values, id: formData.id }).then(() => {
+        message.success('提交成功');
+        history.push('/article/list');
+      });
     }
   };
 
