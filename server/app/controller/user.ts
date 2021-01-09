@@ -51,4 +51,10 @@ export default class UserController extends Controller {
 
     this.ctx.helper.msgSuccess(user);
   }
+
+  public async getInfo() {
+    const user = await this.service.user.getUserById();
+
+    this.ctx.helper.msgSuccess(user);
+  }
 }

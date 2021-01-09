@@ -8,6 +8,7 @@ export default (app: Application) => {
   // user
   router.post('/api/user/register', controller.user.register);
   router.post('/api/user/login', controller.user.login);
+  router.post('/api/user/getInfo', controller.user.getInfo);
 
   // article
   router.post('/api/article/create', controller.article.create);

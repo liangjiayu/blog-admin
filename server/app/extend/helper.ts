@@ -15,6 +15,7 @@ export default {
    * @param this helper
    * @param data 实体
    * @param option 配置
+   * @example {code:200,msg:'success',data:null}
    */
   msgSuccess(this: IHelper, data: any = null, option = {}) {
     const _option = {
@@ -36,6 +37,7 @@ export default {
    * @param this helper
    * @param msg 信息
    * @param option 配置
+   * @example {code:400,msg:'error',data:null}
    */
   msgError(this: IHelper, msg = '系统错误', option = {}) {
     const _option = {

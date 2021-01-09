@@ -1,3 +1,4 @@
+import jwt = require('jsonwebtoken');
 import { Service } from 'egg';
 
 export default class User extends Service {
@@ -20,6 +21,7 @@ export default class User extends Service {
   public async signIn(params) {
     const { email, password } = params;
     const user = await this.ctx.model.User.findOne({ where: { email } });
+    const secretKey = this.app.config.jwt.secretKey;
 
     if (!user) {
       throw new Error('用户不存在');
@@ -28,6 +30,17 @@ export default class User extends Service {
       throw new Error('密码不正确');
     }
 
+    const token = jwt.sign({ id: user.id, email: user.email }, secretKey);
+
+    return {
+      user,
+      token,
+    };
+  }
+
+  public async getUserById() {
+    const _id = this.ctx.tokenInfo.id;
+    const user = await this.ctx.model.User.findByPk(_id);
     return user;
   }
 }

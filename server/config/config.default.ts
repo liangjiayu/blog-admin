@@ -8,13 +8,18 @@ export default (appInfo: EggAppInfo) => {
   config.keys = appInfo.name + '_1607506827239_9807';
 
   // add your egg config in here
-  config.middleware = [ 'errorHandler' ];
+  config.middleware = [ 'authToken', 'errorHandler' ];
 
   // my
   config.security = {
     csrf: {
       ignore: '/api/*/*', // 白名单
     },
+  };
+
+  config.jwt = {
+    secretKey: 'secretKey',
+    expiresIn: 60 * 60,
   };
 
   // add your special config in here
