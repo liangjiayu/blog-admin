@@ -19,7 +19,7 @@ const IndexView = () => {
   const [pages, setPages] = useState({ current: 1, pageSize: 10, total: 0 });
 
   const fetchList = () => {
-    console.log(listParams);
+    // console.log(listParams);
     setLoading(true);
     getArticleList({ ...listParams }).then((res) => {
       setLoading(false);

@@ -16,6 +16,11 @@
     ],
   },
   {
+    path: '/login',
+    layout: false,
+    component: './Login',
+  },
+  {
     path: '/welcome',
     name: 'welcome',
     icon: 'smile',

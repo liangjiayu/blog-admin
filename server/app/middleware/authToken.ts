@@ -26,7 +26,7 @@ export default () => {
       ctx.tokenInfo = tokenInfo;
       await next();
     } catch (error) {
-      ctx.helper.msgError(error.message);
+      ctx.throw(401, error.message);
     }
   };
 };

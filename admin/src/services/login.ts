@@ -22,3 +22,8 @@ export async function getFakeCaptcha(mobile: string) {
 export async function outLogin() {
   return request('/api/login/outLogin');
 }
+
+// 用户登录
+export async function userLogin(data) {
+  return request('/api/user/login', { method: 'POST', data });
+}

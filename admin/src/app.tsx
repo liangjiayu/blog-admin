@@ -6,9 +6,10 @@ import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
-import type { ResponseError } from 'umi-request';
+import type { ResponseError, RequestOptionsInit } from 'umi-request';
 import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
+import { getStore } from './utils/session';
 
 /**
  * 获取用户信息比较慢的时候会展示一个 loading
@@ -21,7 +22,11 @@ export async function getInitialState(): Promise<{
   settings?: LayoutSettings;
   currentUser?: API.CurrentUser;
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
+  token?: string;
+  userInfo?: any;
 }> {
+  console.log('getInitialState');
+
   const fetchUserInfo = async () => {
     try {
       const currentUser = await queryCurrent();
@@ -31,16 +36,20 @@ export async function getInitialState(): Promise<{
     }
     return undefined;
   };
-  // 如果是登录页面，不执行
-  if (history.location.pathname !== '/user/login') {
-    const currentUser = await fetchUserInfo();
-    return {
-      fetchUserInfo,
-      currentUser,
-      settings: defaultSettings,
-    };
-  }
+  // // 如果是登录页面，不执行
+  // if (history.location.pathname !== '/user/login') {
+  //   const currentUser = await fetchUserInfo();
+  //   return {
+  //     token: getStore('TOKEN'),
+  //     userInfo: getStore('USER_INFO'),
+  //     fetchUserInfo,
+  //     currentUser,
+  //     settings: defaultSettings,
+  //   };
+  // }
   return {
+    token: getStore('TOKEN'),
+    userInfo: getStore('USER_INFO'),
     fetchUserInfo,
     settings: defaultSettings,
   };
@@ -54,8 +63,8 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
     onPageChange: () => {
       const { location } = history;
       // 如果没有登录，重定向到 login
-      if (!initialState?.currentUser && location.pathname !== '/user/login') {
-        history.push('/user/login');
+      if (!initialState?.token && location.pathname !== '/login') {
+        history.push('/login');
       }
     },
     menuHeaderRender: undefined,
@@ -108,6 +117,16 @@ const errorHandler = (error: ResponseError) => {
   throw error;
 };
 
+const authHeaderInterceptor = (url: string, options: RequestOptionsInit) => {
+  const token = getStore('TOKEN');
+  const authHeader = { Authorization: `Bearer ${token}` };
+  return {
+    url: `${url}`,
+    options: { ...options, interceptors: true, headers: authHeader },
+  };
+};
+
 export const request: RequestConfig = {
   errorHandler,
+  requestInterceptors: [authHeaderInterceptor],
 };
