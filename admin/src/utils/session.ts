@@ -17,9 +17,9 @@ export const setStore = (key, value) => {
   window.localStorage.setItem(key, data);
 };
 
-export const removeSession = (key) => {
+export const removeStore = (key) => {
   if (!key) {
     return;
   }
-  window.sessionStorage.removeItem(key);
+  window.localStorage.removeItem(key);
 };
