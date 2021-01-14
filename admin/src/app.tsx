@@ -25,7 +25,7 @@ export async function getInitialState(): Promise<{
   token?: string;
   userInfo?: any;
 }> {
-  console.log('getInitialState');
+  // console.log('getInitialState');
 
   const fetchUserInfo = async () => {
     try {

@@ -1,20 +1,20 @@
 ﻿export default [
-  {
-    path: '/user',
-    layout: false,
-    routes: [
-      {
-        path: '/user',
-        routes: [
-          {
-            name: 'login',
-            path: '/user/login',
-            component: './User/login',
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   path: '/user',
+  //   layout: false,
+  //   routes: [
+  //     {
+  //       path: '/user',
+  //       routes: [
+  //         {
+  //           name: 'login',
+  //           path: '/user/login',
+  //           component: './User/login',
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     path: '/login',
     layout: false,
@@ -62,6 +62,17 @@
         hideInMenu: true,
         name: '新增文章',
         component: './ArticleAdd',
+      },
+    ],
+  },
+  {
+    path: '/System',
+    name: '系统管理',
+    routes: [
+      {
+        path: '/System/Menu',
+        name: '菜单管理',
+        component: './System/Menu',
       },
     ],
   },
