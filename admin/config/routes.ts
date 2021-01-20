@@ -74,6 +74,22 @@
         name: '菜单管理',
         component: './System/Menu',
       },
+      {
+        path: '/System/Role',
+        name: '角色管理',
+        component: './System/Role',
+      },
+    ],
+  },
+  {
+    path: '/demo',
+    name: '测试菜单',
+    routes: [
+      {
+        path: '/demo/one',
+        name: '测试菜单ONE',
+        component: './demo/one',
+      },
     ],
   },
   {

@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Table, Space } from 'antd';
 import AddMenu from './components/AddMenu';
+import { getStore } from '@/utils/session';
 
 /**
  * {
@@ -12,7 +13,23 @@ import AddMenu from './components/AddMenu';
  * }
  */
 
+const getMenuListTest = () => {
+  const MenuList = getStore('MenuList') || [];
+  return MenuList;
+};
+
 const MenuView = () => {
+  const [list, setList] = useState([]);
+
+  const fetchList = () => {
+    const MenuList = getMenuListTest();
+    setList(MenuList);
+  };
+
+  useEffect(() => {
+    fetchList();
+  }, []);
+
   const columns = [
     {
       title: '菜单名称',
@@ -36,23 +53,12 @@ const MenuView = () => {
     },
   ];
 
-  const data = [
-    {
-      id: '4646',
-      name: '系统管理',
-      path: '/System',
-      component: '/System',
-      hideInMenu: false,
-      routes: [],
-    },
-  ];
-
   return (
     <Card>
       <div className="site-toolbar">
-        <AddMenu />
+        <AddMenu onSuccess={fetchList} />
       </div>
-      <Table columns={columns} dataSource={data} rowKey="id" />
+      <Table columns={columns} dataSource={list} rowKey="id" pagination={false} />
     </Card>
   );
 };

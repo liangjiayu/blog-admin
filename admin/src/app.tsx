@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
+import type { Settings as LayoutSettings, MenuDataItem } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
 import { notification } from 'antd';
 import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
@@ -68,6 +68,25 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       }
     },
     menuHeaderRender: undefined,
+    // menuDataRender: (menuData) => {
+    //   const list = [
+    //     {
+    //       path: '/demo',
+    //       name: '测试菜单',
+    //       hideInMenu: false,
+    //       children: [
+    //         {
+    //           path: '/demo/one',
+    //           name: '测试菜单ONE',
+    //         },
+    //       ],
+    //     },
+    //   ];
+
+    //   console.log(menuData);
+
+    //   return list;
+    // },
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     ...initialState?.settings,

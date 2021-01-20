@@ -35,6 +35,8 @@ const UpdateForm: React.FC<UpdateFormProps> = (props) => {
         size: 'small',
       }}
       stepsFormRender={(dom, submitter) => {
+        console.log(1111);
+        
         return (
           <Modal
             width={640}
