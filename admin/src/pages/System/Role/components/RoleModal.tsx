@@ -1,13 +1,13 @@
-import React, { useState, useImperativeHandle, forwardRef, useRef, useEffect } from 'react';
+import React from 'react';
 import { Form, Input, Modal } from 'antd';
 import { getStore, setStore } from '@/utils/session';
 
-// export type RoleModalProps = {
-//   onCancel: (flag?: boolean, formVals?: FormValueType) => void;
-//   onSubmit: (values: FormValueType) => Promise<void>;
-//   updateModalVisible: boolean;
-//   values: Partial<TableListItem>;
-// };
+type RoleModalProps = {
+  onCancel: () => void;
+  onSuccess: () => void;
+  visible: boolean;
+  values: any;
+};
 
 const addRoleTest = (data) => {
   const roleList = getStore('roleList') || [];
@@ -15,7 +15,17 @@ const addRoleTest = (data) => {
   setStore('roleList', roleList);
 };
 
-const RoleModal = (props) => {
+const putRoleTest = (data) => {
+  const roleList = getStore('roleList') || [];
+  const current = roleList.find((i) => {
+    return i.id === data.id;
+  });
+  current.roleName = data.roleName;
+  current.roleCode = data.roleCode;
+  setStore('roleList', roleList);
+};
+
+const RoleModal: React.FC<RoleModalProps> = (props) => {
   const [form] = Form.useForm();
 
   // 回显表单的字段
@@ -24,17 +34,18 @@ const RoleModal = (props) => {
   }
 
   const onFinish = (values: any) => {
-    console.log(props);
-
-    // console.log('Success:', values);
-    // addRoleTest(values);
-    // props.onSuccess();
+    if (props.values?.id) {
+      putRoleTest({ ...values, id: props.values.id });
+    } else {
+      addRoleTest(values);
+    }
+    props.onSuccess();
   };
 
   return (
     <>
       <Modal
-        title="新增"
+        title={props.values ? '编辑' : '新增'}
         visible={props.visible}
         onOk={() => {
           form.submit();
@@ -51,11 +62,11 @@ const RoleModal = (props) => {
           preserve={false}
           initialValues={{}}
         >
-          <Form.Item label="角色名称" name="roleName" rules={[{ required: true }]}>
+          <Form.Item label="角色编码" name="roleCode" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
 
-          <Form.Item label="角色编码" name="roleCode" rules={[{ required: true }]}>
+          <Form.Item label="角色名称" name="roleName" rules={[{ required: true }]}>
             <Input />
           </Form.Item>
         </Form>

@@ -78,7 +78,7 @@ const RoleView = () => {
           setRoleModalVisible(false);
           fetchList();
         }}
-        values={currentRow || {}}
+        values={currentRow}
       />
 
       <Table columns={columns} dataSource={list} rowKey="id" />
