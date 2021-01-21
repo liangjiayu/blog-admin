@@ -6,7 +6,7 @@ type RoleModalProps = {
   onCancel: () => void;
   onSuccess: () => void;
   visible: boolean;
-  values: any;
+  current: any;
 };
 
 const addRoleTest = (data) => {
@@ -30,12 +30,12 @@ const RoleModal: React.FC<RoleModalProps> = (props) => {
 
   // 回显表单的字段
   if (props.visible) {
-    form.setFieldsValue(props.values);
+    form.setFieldsValue(props.current);
   }
 
   const onFinish = (values: any) => {
-    if (props.values?.id) {
-      putRoleTest({ ...values, id: props.values.id });
+    if (props.current?.id) {
+      putRoleTest({ ...values, id: props.current.id });
     } else {
       addRoleTest(values);
     }
@@ -45,7 +45,7 @@ const RoleModal: React.FC<RoleModalProps> = (props) => {
   return (
     <>
       <Modal
-        title={props.values ? '编辑' : '新增'}
+        title={props.current ? '编辑' : '新增'}
         visible={props.visible}
         onOk={() => {
           form.submit();

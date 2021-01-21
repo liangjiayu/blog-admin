@@ -1,16 +1,32 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Table, Space, Button } from 'antd';
+
 import RoleModal from './components/RoleModal';
-import { getStore } from '@/utils/session';
+import MenuPerm from './components/MenuPerm';
+
+import { getStore, setStore } from '@/utils/session';
 
 const getRoleListTest = () => {
   return getStore('roleList') || [];
 };
 
+const putRoleTest = (data) => {
+  const roleList = getStore('roleList') || [];
+  const current = roleList.find((i) => {
+    return i.id === data.id;
+  });
+  current.menuPerm = data.menuPerm;
+  setStore('roleList', roleList);
+};
+
 const RoleView = () => {
+  const [currentRow, setCurrentRow] = useState<any>();
+
   // RoleModal
   const [roleModalVisible, setRoleModalVisible] = useState(false);
-  const [currentRow, setCurrentRow] = useState();
+
+  // MenuPerm
+  const [menuPermVisible, setMenuPermVisible] = useState(false);
 
   // List
   const [list, setList] = useState([]);
@@ -40,6 +56,14 @@ const RoleView = () => {
           >
             编辑
           </a>
+          <a
+            onClick={() => {
+              setCurrentRow(record);
+              setMenuPermVisible(true);
+            }}
+          >
+            菜单授权
+          </a>
         </Space>
       ),
     },
@@ -68,6 +92,7 @@ const RoleView = () => {
         </Button>
       </div>
 
+      {/* 角色详情 */}
       <RoleModal
         visible={roleModalVisible}
         onCancel={() => {
@@ -78,7 +103,21 @@ const RoleView = () => {
           setRoleModalVisible(false);
           fetchList();
         }}
-        values={currentRow}
+        current={currentRow}
+      />
+
+      {/* 菜单授权 */}
+      <MenuPerm
+        visible={menuPermVisible}
+        onCancel={() => {
+          setCurrentRow(undefined);
+          setMenuPermVisible(false);
+        }}
+        onSuccess={(keys) => {
+          setMenuPermVisible(false);
+          putRoleTest({ id: currentRow.id, menuPerm: keys });
+        }}
+        current={currentRow}
       />
 
       <Table columns={columns} dataSource={list} rowKey="id" />
