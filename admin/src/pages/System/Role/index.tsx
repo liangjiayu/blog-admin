@@ -1,23 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Table, Space, Button } from 'antd';
+import { Card, Table, Space, Button, Popconfirm } from 'antd';
 
 import RoleModal from './components/RoleModal';
 import MenuPerm from './components/MenuPerm';
 
-import { getStore, setStore } from '@/utils/session';
-
-const getRoleListTest = () => {
-  return getStore('roleList') || [];
-};
-
-const putRoleTest = (data) => {
-  const roleList = getStore('roleList') || [];
-  const current = roleList.find((i) => {
-    return i.id === data.id;
-  });
-  current.menuPerm = data.menuPerm;
-  setStore('roleList', roleList);
-};
+import { getRoleList, putRoleItem, delRoleItem } from './service';
 
 const RoleView = () => {
   const [currentRow, setCurrentRow] = useState<any>();
@@ -30,6 +17,15 @@ const RoleView = () => {
 
   // List
   const [list, setList] = useState([]);
+
+  const fetchList = () => {
+    const RoleList = getRoleList();
+    setList(RoleList);
+  };
+
+  useEffect(() => {
+    fetchList();
+  }, []);
 
   const columns = [
     {
@@ -64,19 +60,19 @@ const RoleView = () => {
           >
             菜单授权
           </a>
+          <Popconfirm
+            title="确定删除吗?"
+            onConfirm={() => {
+              delRoleItem({ id: record.id });
+              fetchList();
+            }}
+          >
+            <a>删除</a>
+          </Popconfirm>
         </Space>
       ),
     },
   ];
-
-  const fetchList = () => {
-    const RoleList = getRoleListTest();
-    setList(RoleList);
-  };
-
-  useEffect(() => {
-    fetchList();
-  }, []);
 
   return (
     <Card>
@@ -115,7 +111,7 @@ const RoleView = () => {
         }}
         onSuccess={(keys) => {
           setMenuPermVisible(false);
-          putRoleTest({ id: currentRow.id, menuPerm: keys });
+          putRoleItem({ id: currentRow.id, menuPerm: keys });
         }}
         current={currentRow}
       />

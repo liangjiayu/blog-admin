@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Form, Input, Modal } from 'antd';
-import { getStore, setStore } from '@/utils/session';
+
+import { addRoleItem, putRoleItem } from '../service';
 
 type RoleModalProps = {
   onCancel: () => void;
@@ -9,35 +10,21 @@ type RoleModalProps = {
   current: any;
 };
 
-const addRoleTest = (data) => {
-  const roleList = getStore('roleList') || [];
-  roleList.push({ ...data, id: new Date().getTime() });
-  setStore('roleList', roleList);
-};
-
-const putRoleTest = (data) => {
-  const roleList = getStore('roleList') || [];
-  const current = roleList.find((i) => {
-    return i.id === data.id;
-  });
-  current.roleName = data.roleName;
-  current.roleCode = data.roleCode;
-  setStore('roleList', roleList);
-};
-
 const RoleModal: React.FC<RoleModalProps> = (props) => {
   const [form] = Form.useForm();
 
   // 回显表单的字段
-  if (props.visible) {
-    form.setFieldsValue(props.current);
-  }
+  useEffect(() => {
+    if (props.visible) {
+      form.setFieldsValue(props.current);
+    }
+  }, [props.current]);
 
   const onFinish = (values: any) => {
     if (props.current?.id) {
-      putRoleTest({ ...values, id: props.current.id });
+      putRoleItem({ ...values, id: props.current.id });
     } else {
-      addRoleTest(values);
+      addRoleItem(values);
     }
     props.onSuccess();
   };

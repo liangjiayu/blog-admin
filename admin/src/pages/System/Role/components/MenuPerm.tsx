@@ -33,7 +33,7 @@ const MenuPerm = (props) => {
     setCheckedKeys(keys);
   };
 
-  useEffect(() => {
+  useEffect(() => {    
     if (props.current && props.current.menuPerm) {
       setCheckedKeys(props.current.menuPerm);
     } else {
@@ -49,7 +49,7 @@ const MenuPerm = (props) => {
         onClose={props.onCancel}
         visible={props.visible}
         width="600"
-        // destroyOnClose
+        destroyOnClose
         footer={
           <div
             style={{
