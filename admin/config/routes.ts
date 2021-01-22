@@ -1,24 +1,12 @@
-﻿export default [
-  // {
-  //   path: '/user',
-  //   layout: false,
-  //   routes: [
-  //     {
-  //       path: '/user',
-  //       routes: [
-  //         {
-  //           name: 'login',
-  //           path: '/user/login',
-  //           component: './User/login',
-  //         },
-  //       ],
-  //     },
-  //   ],
-  // },
+﻿const baseRoutes = [
   {
     path: '/login',
     layout: false,
     component: './Login',
+  },
+  {
+    path: '/',
+    redirect: '/welcome',
   },
   {
     path: '/welcome',
@@ -26,6 +14,9 @@
     icon: 'smile',
     component: './Welcome',
   },
+];
+
+const AuthRoutes = [
   {
     path: '/admin',
     name: 'admin',
@@ -92,10 +83,25 @@
       },
     ],
   },
-  {
-    path: '/',
-    redirect: '/welcome',
-  },
+];
+
+const handleAuthRoutes = (routes) => {
+  const result: any[] = [];
+  routes.forEach((item) => {
+    const row: any = { ...item, access: 'roleAuth' };
+
+    if (item.routes && item.routes.length) {
+      row.routes = handleAuthRoutes(item.routes);
+    }
+    result.push(row);
+  });
+
+  return result;
+};
+
+export default [
+  ...baseRoutes,
+  ...handleAuthRoutes(AuthRoutes),
   {
     component: './404',
   },

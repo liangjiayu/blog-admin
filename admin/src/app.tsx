@@ -24,6 +24,7 @@ export async function getInitialState(): Promise<{
   fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
   token?: string;
   userInfo?: any;
+  roleInfo?: any;
 }> {
   // console.log('getInitialState');
 
@@ -50,6 +51,7 @@ export async function getInitialState(): Promise<{
   return {
     token: getStore('TOKEN'),
     userInfo: getStore('USER_INFO'),
+    roleInfo: getStore('roleList')[0],  // TODO 
     fetchUserInfo,
     settings: defaultSettings,
   };

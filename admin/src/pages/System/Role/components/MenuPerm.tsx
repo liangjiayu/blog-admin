@@ -30,7 +30,9 @@ const MenuPerm = (props) => {
   const [checkedKeys, setCheckedKeys] = useState([]);
 
   const onCheck = (keys) => {
-    setCheckedKeys(keys);
+    // console.log(keys.checked);
+    
+    setCheckedKeys(keys.checked);
   };
 
   useEffect(() => {    
@@ -77,6 +79,7 @@ const MenuPerm = (props) => {
             checkedKeys={checkedKeys}
             treeData={treeData}
             defaultExpandAll
+            checkStrictly
           />
         </div>
       </Drawer>
