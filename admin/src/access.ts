@@ -5,8 +5,9 @@ export default function access(initialState) {
   return {
     canAdmin: currentUser && currentUser.access === 'admin',
     roleAuth: (route) => {
-      const { menuPerm } = initialState.roleInfo;
-      return menuPerm.includes(route.path);
+      return true
+      // const { menuPerm } = initialState.roleInfo;
+      // return menuPerm.includes(route.path);
     },
   };
 }

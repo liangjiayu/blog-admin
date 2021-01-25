@@ -61,14 +61,19 @@ const AuthRoutes = [
     name: '系统管理',
     routes: [
       {
-        path: '/System/Menu',
-        name: '菜单管理',
-        component: './System/Menu',
+        path: '/System/User',
+        name: '用户管理',
+        component: './System/User',
       },
       {
         path: '/System/Role',
         name: '角色管理',
         component: './System/Role',
+      },
+      {
+        path: '/System/Menu',
+        name: '菜单管理',
+        component: './System/Menu',
       },
     ],
   },
