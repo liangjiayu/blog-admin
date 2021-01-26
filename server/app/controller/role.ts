@@ -48,4 +48,9 @@ export default class RoleController extends Controller {
     const result = await this.service.role.getRoleList(formData);
     return this.ctx.helper.msgSuccess(result);
   }
+
+  public async all() {
+    const result = await this.service.role.getAllRole();
+    return this.ctx.helper.msgSuccess(result);
+  }
 }

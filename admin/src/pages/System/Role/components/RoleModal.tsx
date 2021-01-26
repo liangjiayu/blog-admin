@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Form, Input, Modal } from 'antd';
 
-import { addRoleItem, putRoleItem } from '../service';
+import { addRole, updateRole } from '@/services/role';
 
 type RoleModalProps = {
   onCancel: () => void;
@@ -18,15 +18,18 @@ const RoleModal: React.FC<RoleModalProps> = (props) => {
     if (props.visible) {
       form.setFieldsValue(props.current);
     }
-  }, [props.current]);
+  }, [props.visible]);
 
   const onFinish = (values: any) => {
-    if (props.current?.id) {
-      putRoleItem({ ...values, id: props.current.id });
+    if (props.current?.roleId) {
+      updateRole({ ...values, roleId: props.current.roleId }).then(()=>{
+        props.onSuccess();
+      })
     } else {
-      addRoleItem(values);
+      addRole(values).then(() => {
+        props.onSuccess();
+      });
     }
-    props.onSuccess();
   };
 
   return (

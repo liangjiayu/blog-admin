@@ -31,17 +31,20 @@ const MenuPerm = (props) => {
 
   const onCheck = (keys) => {
     // console.log(keys.checked);
-    
+
     setCheckedKeys(keys.checked);
   };
 
-  useEffect(() => {    
-    if (props.current && props.current.menuPerm) {
-      setCheckedKeys(props.current.menuPerm);
-    } else {
-      setCheckedKeys([]);
+  useEffect(() => {
+    if (props.visible) {
+      if (props.current && props.current.menuPerm) {
+        const menuPerm = props.current.menuPerm.split(',');
+        setCheckedKeys(menuPerm);
+      } else {
+        setCheckedKeys([]);
+      }
     }
-  }, [props.current]);
+  }, [props.visible]);
 
   return (
     <>

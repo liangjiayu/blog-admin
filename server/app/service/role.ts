@@ -23,6 +23,7 @@ export default class Role extends Service {
     const content = {
       roleCode: params.roleCode,
       roleName: params.roleName,
+      menuPerm: params.menuPerm,
     };
 
     await role.update(content);
@@ -61,5 +62,11 @@ export default class Role extends Service {
       size: query.pageSize,
       total: count,
     };
+  }
+
+  public async getAllRole() {
+    const roleList = await this.ctx.model.Role.findAll();
+
+    return roleList;
   }
 }

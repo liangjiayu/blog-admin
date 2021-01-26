@@ -4,7 +4,8 @@ import { Card, Table, Space, Button, Popconfirm } from 'antd';
 import RoleModal from './components/RoleModal';
 import MenuPerm from './components/MenuPerm';
 
-import { getRoleList, putRoleItem, delRoleItem } from './service';
+
+import { getRoleAll, updateRole, delRole } from '@/services/role';
 
 const RoleView = () => {
   const [currentRow, setCurrentRow] = useState<any>();
@@ -19,8 +20,10 @@ const RoleView = () => {
   const [list, setList] = useState([]);
 
   const fetchList = () => {
-    const RoleList = getRoleList();
-    setList(RoleList);
+    getRoleAll({}).then((res) => {
+      const { data } = res;
+      setList(data);
+    });
   };
 
   useEffect(() => {
@@ -38,7 +41,11 @@ const RoleView = () => {
     },
     {
       title: '创建时间',
-      dataIndex: 'createTime',
+      dataIndex: 'createdAt',
+    },
+    {
+      title: '修改时间',
+      dataIndex: 'updatedAt',
     },
     {
       title: '操作',
@@ -63,8 +70,9 @@ const RoleView = () => {
           <Popconfirm
             title="确定删除吗?"
             onConfirm={() => {
-              delRoleItem({ id: record.id });
-              fetchList();
+              delRole({ roleId: record.roleId }).then(() => {
+                fetchList();
+              });
             }}
           >
             <a>删除</a>
@@ -111,12 +119,14 @@ const RoleView = () => {
         }}
         onSuccess={(keys) => {
           setMenuPermVisible(false);
-          putRoleItem({ id: currentRow.id, menuPerm: keys });
+          updateRole({ roleId: currentRow.roleId, menuPerm: keys.join() }).then(() => {
+            fetchList();
+          });
         }}
         current={currentRow}
       />
 
-      <Table columns={columns} dataSource={list} rowKey="id" />
+      <Table columns={columns} dataSource={list} rowKey="roleId" />
     </Card>
   );
 };
