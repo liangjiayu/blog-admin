@@ -51,7 +51,7 @@ export async function getInitialState(): Promise<{
   return {
     token: getStore('TOKEN'),
     userInfo: getStore('USER_INFO'),
-    roleInfo: getStore('roleList')[0],  // TODO 
+    roleInfo: getStore('ROLE_INFO'),
     fetchUserInfo,
     settings: defaultSettings,
   };

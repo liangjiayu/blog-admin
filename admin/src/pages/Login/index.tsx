@@ -14,10 +14,12 @@ const LoginView = () => {
       const { data } = res;
       setStore('TOKEN', data.token);
       setStore('USER_INFO', data.user);
+      setStore('ROLE_INFO', data.role);
       setInitialState({
         ...initialState,
         token: data.token,
         userInfo: data.user,
+        roleInfo: data.role,
       });
       setTimeout(() => {
         history.push('/');
@@ -31,7 +33,7 @@ const LoginView = () => {
       <div className={styles.containerBox}>
         <div className={styles.containerLogo}>MIN系统</div>
         <Form onFinish={onFinish} size="large">
-          <Form.Item name="email" rules={[{ required: true, message: '请输入邮箱!' }]}>
+          <Form.Item name="username" rules={[{ required: true, message: '请输入邮箱!' }]}>
             <Input prefix={<UserOutlined />} placeholder="用户名" />
           </Form.Item>
 

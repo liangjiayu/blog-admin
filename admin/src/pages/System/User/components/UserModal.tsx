@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, Input, Modal, Select } from 'antd';
 
 import { addUser, updateUser } from '../service';
+import { getRoleAll } from '@/services/role';
 
 type UserModalProps = {
   onCancel: () => void;
@@ -10,28 +11,9 @@ type UserModalProps = {
   current: any;
 };
 
-const RoleList = [
-  {
-    roleId: 1,
-    roleName: '管理员',
-    roleCode: 'admin',
-  },
-  {
-    roleId: 2,
-    roleName: '测试人员',
-    roleCode: 'test',
-  },
-];
-
-const RoleListoptions = RoleList.map((item) => {
-  return {
-    label: item.roleName,
-    value: item.roleId,
-  };
-});
-
 const UserModal: React.FC<UserModalProps> = (props) => {
   const [form] = Form.useForm();
+  const [roleList, setRoleList] = useState([]);
 
   // 回显表单的字段
   useEffect(() => {
@@ -39,6 +21,19 @@ const UserModal: React.FC<UserModalProps> = (props) => {
       form.setFieldsValue(props.current);
     }
   }, [props.visible]);
+
+  useEffect(() => {
+    getRoleAll({}).then((res) => {
+      const { data } = res;
+      const list = data.map((item) => {
+        return {
+          label: item.roleName,
+          value: item.roleId,
+        };
+      });
+      setRoleList(list);
+    });
+  }, []);
 
   const onFinish = (values: any) => {
     if (props.current?.userId) {
@@ -81,7 +76,7 @@ const UserModal: React.FC<UserModalProps> = (props) => {
           </Form.Item>
 
           <Form.Item label="角色" name="roleId" rules={[{ required: true }]}>
-            <Select options={RoleListoptions}></Select>
+            <Select options={roleList}></Select>
           </Form.Item>
         </Form>
       </Modal>

@@ -43,7 +43,7 @@ export default class UserController extends Controller {
 
     // 参数验证
     await this.ctx.helper.validate(formData, {
-      email: { type: 'string', required: true },
+      username: { type: 'string', required: true },
       password: { type: 'string', required: true },
     });
 
