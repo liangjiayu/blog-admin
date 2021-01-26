@@ -1,7 +1,7 @@
 import { Application } from 'egg';
 
 export default (app: Application) => {
-  const { controller, router } = app;
+  const { controller, router, middleware } = app;
 
   router.get('/', controller.home.index);
 
@@ -10,7 +10,7 @@ export default (app: Application) => {
   router.post('/api/user/login', controller.user.login);
   router.post('/api/user/getInfo', controller.user.getInfo);
 
-  router.post('/api/user/create', controller.user.create);
+  router.post('/api/user/create', middleware.authApi([ 'user:add' ]), controller.user.create);
   router.post('/api/user/update', controller.user.update);
   router.post('/api/user/del', controller.user.del);
   router.post('/api/user/list', controller.user.list);
@@ -21,7 +21,6 @@ export default (app: Application) => {
   router.post('/api/role/del', controller.role.del);
   router.post('/api/role/list', controller.role.list);
   router.post('/api/role/all', controller.role.all);
-
 
   // article
   router.post('/api/article/create', controller.article.create);

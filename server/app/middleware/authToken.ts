@@ -3,6 +3,7 @@ import { Context } from 'egg';
 
 export default () => {
   return async function authToken(ctx: Context, next) {
+    // return await next();
     const whiteList = [ '/api/user/login' ];
     if (whiteList.includes(ctx.url)) {
       return await next();
