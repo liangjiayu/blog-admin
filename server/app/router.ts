@@ -15,6 +15,12 @@ export default (app: Application) => {
   router.post('/api/user/del', controller.user.del);
   router.post('/api/user/list', controller.user.list);
 
+  // role
+  router.post('/api/role/create', controller.role.create);
+  router.post('/api/role/update', controller.role.update);
+  router.post('/api/role/del', controller.role.del);
+  router.post('/api/role/list', controller.role.list);
+
 
   // article
   router.post('/api/article/create', controller.article.create);

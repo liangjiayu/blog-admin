@@ -1,19 +1,17 @@
 module.exports = app => {
   const { STRING, INTEGER, DATE } = app.Sequelize;
 
-  const User = app.model.define(
-    'user',
+  const Role = app.model.define(
+    'role',
     {
-      userId: { type: INTEGER, primaryKey: true, autoIncrement: true }, // 用户id
-      username: { type: STRING(255), allowNull: false }, // 用户名称
-      password: { type: STRING(255), allowNull: false }, // 用户密码
-      roleId: { type: INTEGER, allowNull: false }, // 角色id
+      roleId: { type: INTEGER, primaryKey: true, autoIncrement: true }, // 角色id
+      roleCode: { type: STRING(255), allowNull: false }, // 角色编码
+      roleName: { type: STRING(255), allowNull: false }, // 角色名称
       createdAt: { type: DATE, field: 'created_at' }, // 创建时间
       updatedAt: { type: DATE, field: 'updated_at' }, // 更新时间
     },
     {
       freezeTableName: true,
-      // timestamps: false,
     },
   );
 
@@ -23,5 +21,5 @@ module.exports = app => {
   //   });
   // };
 
-  return User;
+  return Role;
 };
