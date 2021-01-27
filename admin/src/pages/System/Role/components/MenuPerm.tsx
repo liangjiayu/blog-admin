@@ -30,8 +30,6 @@ const MenuPerm = (props) => {
   const [checkedKeys, setCheckedKeys] = useState([]);
 
   const onCheck = (keys) => {
-    // console.log(keys.checked);
-
     setCheckedKeys(keys.checked);
   };
 

@@ -3,7 +3,7 @@ import { Card, Table, Space, Button, Popconfirm } from 'antd';
 
 import RoleModal from './components/RoleModal';
 import MenuPerm from './components/MenuPerm';
-
+import ApiPerm from './components/ApiPerm';
 
 import { getRoleAll, updateRole, delRole } from '@/services/role';
 
@@ -15,6 +15,9 @@ const RoleView = () => {
 
   // MenuPerm
   const [menuPermVisible, setMenuPermVisible] = useState(false);
+
+  // ApiPerm
+  const [apiPermVisible, setApiPermVisible] = useState(false);
 
   // List
   const [list, setList] = useState([]);
@@ -66,6 +69,14 @@ const RoleView = () => {
             }}
           >
             菜单授权
+          </a>
+          <a
+            onClick={() => {
+              setCurrentRow(record);
+              setApiPermVisible(true);
+            }}
+          >
+            接口授权
           </a>
           <Popconfirm
             title="确定删除吗?"
@@ -125,6 +136,18 @@ const RoleView = () => {
         }}
         current={currentRow}
       />
+
+      <ApiPerm
+        visible={apiPermVisible}
+        onCancel={() => {
+          setApiPermVisible(false);
+        }}
+        onSuccess={() => {
+          setApiPermVisible(false);
+          fetchList();
+        }}
+        current={currentRow}
+      ></ApiPerm>
 
       <Table columns={columns} dataSource={list} rowKey="roleId" />
     </Card>

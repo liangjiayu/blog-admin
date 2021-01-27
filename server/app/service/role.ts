@@ -24,6 +24,7 @@ export default class Role extends Service {
       roleCode: params.roleCode,
       roleName: params.roleName,
       menuPerm: params.menuPerm,
+      apiPerm: params.apiPerm,
     };
 
     await role.update(content);
