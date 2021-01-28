@@ -15,10 +15,7 @@ module.exports = app => {
       createdAt: { type: DATE, field: 'created_at' }, // 创建时间
       updatedAt: { type: DATE, field: 'updated_at' }, // 更新时间
     },
-    {
-      freezeTableName: true,
-      // timestamps: false,
-    },
+    {},
   );
 
   return Article;
