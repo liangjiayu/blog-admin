@@ -3,6 +3,7 @@ import { Card, Table, Space, Button, Popconfirm } from 'antd';
 
 import { getDictList, delDict } from '@/services/dictionary';
 import DictModal from './components/DictModal';
+import DictContent from './components/DictContent';
 
 const listParams = {
   pageSize: 10,
@@ -14,6 +15,9 @@ const UserView = () => {
 
   // DictModal
   const [dictModalVisible, setDictModalVisible] = useState(false);
+
+  // DictContent
+  const [dictContentVisible, setDictContentVisible] = useState(false);
 
   // List
   const [list, setList] = useState([]);
@@ -78,6 +82,15 @@ const UserView = () => {
             编辑
           </a>
 
+          <a
+            onClick={() => {
+              setCurrentRow(record);
+              setDictContentVisible(true);
+            }}
+          >
+            内容
+          </a>
+
           <Popconfirm
             title="确定删除吗?"
             onConfirm={() => {
@@ -107,7 +120,7 @@ const UserView = () => {
         </Button>
       </div>
 
-      {/* 用户弹窗 */}
+      {/* 字典弹窗 */}
       <DictModal
         visible={dictModalVisible}
         onCancel={() => {
@@ -118,7 +131,16 @@ const UserView = () => {
           fetchList();
         }}
         current={currentRow}
-      ></DictModal>
+      />
+
+      {/* 子项详情 */}
+      <DictContent
+        visible={dictContentVisible}
+        onClose={() => {
+          setDictContentVisible(false);
+        }}
+        current={currentRow}
+      />
 
       <Table
         columns={columns}
