@@ -75,6 +75,11 @@ const AuthRoutes = [
         name: '菜单管理',
         component: './System/Menu',
       },
+      {
+        path: '/System/Dictionary',
+        name: '字典管理',
+        component: './System/Dictionary',
+      },
     ],
   },
   {
@@ -93,7 +98,10 @@ const AuthRoutes = [
 const handleAuthRoutes = (routes) => {
   const result: any[] = [];
   routes.forEach((item) => {
-    const row: any = { ...item, access: 'roleAuth' };
+    const row: any = {
+      ...item,
+      // access: 'roleAuth'
+    };
 
     if (item.routes && item.routes.length) {
       row.routes = handleAuthRoutes(item.routes);
