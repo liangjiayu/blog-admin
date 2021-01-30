@@ -10,7 +10,11 @@ export default (app: Application) => {
   router.post('/api/user/login', controller.user.login);
   router.post('/api/user/getInfo', controller.user.getInfo);
 
-  router.post('/api/user/create', middleware.authApi([ 'user:add' ]), controller.user.create);
+  router.post(
+    '/api/user/create',
+    middleware.authApi([ 'user:add' ]),
+    controller.user.create,
+  );
   router.post('/api/user/update', controller.user.update);
   router.post('/api/user/del', controller.user.del);
   router.post('/api/user/list', controller.user.list);
@@ -49,4 +53,17 @@ export default (app: Application) => {
   router.post('/api/reply/del', controller.reply.del);
   router.post('/api/reply/list', controller.reply.list);
   router.post('/api/reply/update', controller.reply.update);
+
+  // dictionary
+  router.post('/api/dict/create', controller.dictionary.create);
+  router.post('/api/dict/update', controller.dictionary.update);
+  router.post('/api/dict/del', controller.dictionary.del);
+  router.post('/api/dict/list', controller.dictionary.list);
+
+  // dictionaryItem
+  router.post('/api/dictItem/create', controller.dictionaryItem.create);
+  router.post('/api/dictItem/update', controller.dictionaryItem.update);
+  router.post('/api/dictItem/del', controller.dictionaryItem.del);
+  router.post('/api/dictItem/all', controller.dictionaryItem.all);
+
 };
