@@ -18,21 +18,12 @@ export default class User extends Service {
       throw new Error('密码不正确');
     }
 
-    const role = await this.ctx.model.Role.findByPk(user.roleId);
+    const token = jwt.sign(
+      { userId: user.userId, roleId: user.roleId },
+      secretKey,
+    );
 
-    const token = jwt.sign({ userId: user.userId, roleId: user.roleId }, secretKey);
-
-    return {
-      user,
-      token,
-      role,
-    };
-  }
-
-  public async getUserById() {
-    const _id = this.ctx.tokenInfo.id;
-    const user = await this.ctx.model.User.findByPk(_id);
-    return user;
+    return { token };
   }
 
   public async addUser(params) {
@@ -96,6 +87,17 @@ export default class User extends Service {
       current: query.pageNum,
       size: query.pageSize,
       total: count,
+    };
+  }
+
+  public async getInfoByToken() {
+    const tokenInfo = this.ctx.tokenInfo;
+    const uesr = await this.ctx.model.User.findByPk(tokenInfo.userId);
+    const role = await this.ctx.model.Role.findByPk(tokenInfo.roleId);
+
+    return {
+      uesr,
+      role,
     };
   }
 }

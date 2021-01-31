@@ -6,10 +6,7 @@ export default (app: Application) => {
   router.get('/', controller.home.index);
 
   // user
-  router.post('/api/user/register', controller.user.register);
   router.post('/api/user/login', controller.user.login);
-  router.post('/api/user/getInfo', controller.user.getInfo);
-
   router.post(
     '/api/user/create',
     middleware.authApi([ 'user:add' ]),
@@ -18,6 +15,8 @@ export default (app: Application) => {
   router.post('/api/user/update', controller.user.update);
   router.post('/api/user/del', controller.user.del);
   router.post('/api/user/list', controller.user.list);
+  router.post('/api/user/getInfoByToken', controller.user.getInfoByToken);
+
 
   // role
   router.post('/api/role/create', controller.role.create);
