@@ -1,4 +1,5 @@
-﻿const baseRoutes = [
+﻿// 基础路由
+const baseRoutes = [
   {
     path: '/login',
     layout: false,
@@ -16,24 +17,10 @@
   },
 ];
 
+// 需要权限控制对路由
 const AuthRoutes = [
   {
-    path: '/admin',
-    name: 'admin',
-    icon: 'crown',
-    access: 'canAdmin',
-    component: './Admin',
-    routes: [
-      {
-        path: '/admin/sub-page',
-        name: 'sub-page',
-        icon: 'smile',
-        component: './Welcome',
-      },
-    ],
-  },
-  {
-    name: 'list.table-list',
+    name: '高级表格',
     icon: 'table',
     path: '/list',
     component: './TableList',
@@ -71,11 +58,6 @@ const AuthRoutes = [
         component: './System/Role',
       },
       {
-        path: '/System/Menu',
-        name: '菜单管理',
-        component: './System/Menu',
-      },
-      {
         path: '/System/Dictionary',
         name: '字典管理',
         component: './System/Dictionary',
@@ -95,6 +77,10 @@ const AuthRoutes = [
   },
 ];
 
+/**
+ * 对路由统一添加权限
+ * @param routes
+ */
 const handleAuthRoutes = (routes) => {
   const result: any[] = [];
   routes.forEach((item) => {

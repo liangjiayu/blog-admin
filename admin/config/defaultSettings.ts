@@ -12,7 +12,7 @@ const Settings: LayoutSettings & {
   primaryColor: '#1890ff',
   layout: 'side',
   contentWidth: 'Fluid',
-  fixedHeader: false,
+  fixedHeader: true,
   fixSiderbar: true,
   colorWeak: false,
   title: 'Ant Design Pro',
