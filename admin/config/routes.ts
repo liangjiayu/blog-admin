@@ -33,13 +33,13 @@ const AuthRoutes = [
       {
         path: '/article/list',
         name: '文章列表',
-        component: './ArticleList',
+        component: './Article/ArticleList',
       },
       {
         path: '/article/add',
         hideInMenu: true,
         name: '新增文章',
-        component: './ArticleAdd',
+        component: './Article/ArticleAdd',
       },
     ],
   },
