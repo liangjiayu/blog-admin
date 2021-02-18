@@ -11,7 +11,7 @@ const baseRoutes = [
   },
   {
     path: '/welcome',
-    name: 'welcome',
+    name: '首页',
     icon: 'smile',
     component: './Welcome',
   },
@@ -86,7 +86,7 @@ const handleAuthRoutes = (routes) => {
   routes.forEach((item) => {
     const row: any = {
       ...item,
-      // access: 'roleAuth'
+      access: 'roleAuth'
     };
 
     if (item.routes && item.routes.length) {

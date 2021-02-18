@@ -1,30 +1,29 @@
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-
-import styles from './index.less';
-import { userLogin } from '@/services/login';
-import { setStore } from '@/utils/session';
 import { history, useModel } from 'umi';
+import styles from './index.less';
+
+import { setStore } from '@/utils/session';
+import { userLogin, getInfoByToken } from '@/api/uesr';
 
 const LoginView = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
 
-  const onFinish = (values: any) => {
-    userLogin({ ...values }).then((res) => {
-      const { data } = res;
-      setStore('TOKEN', data.token);
-      setStore('USER_INFO', data.user);
-      setStore('ROLE_INFO', data.role);
-      setInitialState({
-        ...initialState,
-        token: data.token,
-        userInfo: data.user,
-        roleInfo: data.role,
-      });
-      setTimeout(() => {
-        history.push('/');
-      }, 10);
+  const onFinish = async (values: any) => {
+    const { data: tokenData } = await userLogin({ ...values });
+    setStore('TOKEN', tokenData.token);
+
+    const { data: userData } = await getInfoByToken({});
+    setInitialState({
+      ...initialState,
+      token: tokenData.token,
+      userInfo: userData.user,
+      roleInfo: userData.role,
     });
+
+    setTimeout(() => {
+      history.push('/');
+    }, 10);
   };
 
   return (

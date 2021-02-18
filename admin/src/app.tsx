@@ -7,9 +7,9 @@ import { history } from 'umi';
 import RightContent from '@/components/RightContent';
 import Footer from '@/components/Footer';
 import type { ResponseError, RequestOptionsInit } from 'umi-request';
-import { queryCurrent } from './services/user';
 import defaultSettings from '../config/defaultSettings';
 import { getStore } from './utils/session';
+import { getInfoByToken } from './api/uesr';
 
 /**
  * 获取用户信息比较慢的时候会展示一个 loading
@@ -20,39 +20,25 @@ export const initialStateConfig = {
 
 export async function getInitialState(): Promise<{
   settings?: LayoutSettings;
-  currentUser?: API.CurrentUser;
-  fetchUserInfo?: () => Promise<API.CurrentUser | undefined>;
   token?: string;
   userInfo?: any;
   roleInfo?: any;
 }> {
-  // console.log('getInitialState');
+  // 如果是登录页面，不执行
+  if (history.location.pathname !== '/login') {
+    const { data: userInfo } = await getInfoByToken({});
+    return {
+      token: getStore('TOKEN'),
+      userInfo: userInfo.uesr,
+      roleInfo: userInfo.role,
+      settings: defaultSettings,
+    };
+  }
 
-  const fetchUserInfo = async () => {
-    try {
-      const currentUser = await queryCurrent();
-      return currentUser;
-    } catch (error) {
-      history.push('/user/login');
-    }
-    return undefined;
-  };
-  // // 如果是登录页面，不执行
-  // if (history.location.pathname !== '/user/login') {
-  //   const currentUser = await fetchUserInfo();
-  //   return {
-  //     token: getStore('TOKEN'),
-  //     userInfo: getStore('USER_INFO'),
-  //     fetchUserInfo,
-  //     currentUser,
-  //     settings: defaultSettings,
-  //   };
-  // }
   return {
-    token: getStore('TOKEN'),
-    userInfo: getStore('USER_INFO'),
-    roleInfo: getStore('ROLE_INFO'),
-    fetchUserInfo,
+    token: undefined,
+    userInfo: null,
+    roleInfo: null,
     settings: defaultSettings,
   };
 }
@@ -70,25 +56,6 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
       }
     },
     menuHeaderRender: undefined,
-    // menuDataRender: (menuData) => {
-    //   const list = [
-    //     {
-    //       path: '/demo',
-    //       name: '测试菜单',
-    //       hideInMenu: false,
-    //       children: [
-    //         {
-    //           path: '/demo/one',
-    //           name: '测试菜单ONE',
-    //         },
-    //       ],
-    //     },
-    //   ];
-
-    //   console.log(menuData);
-
-    //   return list;
-    // },
     // 自定义 403 页面
     // unAccessible: <div>unAccessible</div>,
     ...initialState?.settings,

@@ -8,9 +8,9 @@ const transferMenu = (data: any[] = []) => {
     if (!item.name || !item.path) {
       return;
     }
-    if (item.hideInMenu) {
-      return;
-    }
+    // if (item.hideInMenu) {
+    //   return;
+    // }
     const row: any = {
       title: item.name,
       key: item.path,
