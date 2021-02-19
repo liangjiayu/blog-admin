@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Form, Input, Modal, Select } from 'antd';
+import React, { useEffect } from 'react';
+import { Form, Input, Modal } from 'antd';
 
-import { addDict, updateDict } from '@/services/dictionary';
+import { addDict, updateDict } from '@/api/dictionary';
 
 type DictModalProps = {
   onCancel: () => void;

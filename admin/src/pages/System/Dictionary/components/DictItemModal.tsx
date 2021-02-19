@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Form, Input, Modal } from 'antd';
 
-import { addDictItem, updateDictItem } from '@/services/dictionary';
+import { addDictItem, updateDictItem } from '@/api/dictionary';
 
 type DictModalProps = {
   onCancel: () => void;

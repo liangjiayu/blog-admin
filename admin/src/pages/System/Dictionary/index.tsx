@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Table, Space, Button, Popconfirm } from 'antd';
 
-import { getDictList, delDict } from '@/services/dictionary';
+import { getDictList, delDict } from '@/api/dictionary';
 import DictModal from './components/DictModal';
 import DictContent from './components/DictContent';
 

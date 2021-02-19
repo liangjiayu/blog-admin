@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Drawer, Button, Table, Space, Popconfirm } from 'antd';
 
-import { getDictItemAll, delDictItem } from '@/services/dictionary';
+import { getDictItemAll, delDictItem } from '@/api/dictionary';
 import DictItemModal from './DictItemModal';
 
 type DictContentProps = {
