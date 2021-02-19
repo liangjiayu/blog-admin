@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Modal, Tree, message } from 'antd';
 
-import { updateRole } from '@/services/role';
+import { updateRole } from '@/api/role';
 
 type ApiPermProps = {
   onCancel: () => void;

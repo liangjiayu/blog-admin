@@ -5,7 +5,7 @@ import RoleModal from './components/RoleModal';
 import MenuPerm from './components/MenuPerm';
 import ApiPerm from './components/ApiPerm';
 
-import { getRoleAll, updateRole, delRole } from '@/services/role';
+import { getRoleAll, updateRole, delRole } from '@/api/role';
 
 const RoleView = () => {
   const [currentRow, setCurrentRow] = useState<any>();
