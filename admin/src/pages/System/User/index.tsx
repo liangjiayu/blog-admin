@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Card, Table, Space, Button, Popconfirm } from 'antd';
 
 import UserModal from './components/UserModal';
-import { getUserList, delUser } from './service';
+import { getUserList, delUser } from '@/api/user';
 
 const listParams = {
   pageSize: 10,

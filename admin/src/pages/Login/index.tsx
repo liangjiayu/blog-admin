@@ -4,7 +4,7 @@ import { history, useModel } from 'umi';
 import styles from './index.less';
 
 import { setStore } from '@/utils/session';
-import { userLogin, getInfoByToken } from '@/api/uesr';
+import { userLogin, getInfoByToken } from '@/api/user';
 
 const LoginView = () => {
   const { initialState, setInitialState } = useModel('@@initialState');

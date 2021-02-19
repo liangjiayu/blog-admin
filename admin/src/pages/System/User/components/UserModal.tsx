@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Form, Input, Modal, Select } from 'antd';
 
-import { addUser, updateUser } from '../service';
-import { getRoleAll } from '@/services/role';
+import { addUser, updateUser } from '@/api/user';
+import { getRoleAll } from '@/api/role';
 
 type UserModalProps = {
   onCancel: () => void;

@@ -9,7 +9,7 @@ import Footer from '@/components/Footer';
 import type { ResponseError, RequestOptionsInit } from 'umi-request';
 import defaultSettings from '../config/defaultSettings';
 import { getStore } from './utils/session';
-import { getInfoByToken } from './api/uesr';
+import { getInfoByToken } from './api/user';
 
 /**
  * 获取用户信息比较慢的时候会展示一个 loading
@@ -29,7 +29,7 @@ export async function getInitialState(): Promise<{
     const { data: userInfo } = await getInfoByToken({});
     return {
       token: getStore('TOKEN'),
-      userInfo: userInfo.uesr,
+      userInfo: userInfo.user,
       roleInfo: userInfo.role,
       settings: defaultSettings,
     };
