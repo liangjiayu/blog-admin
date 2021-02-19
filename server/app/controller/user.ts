@@ -26,9 +26,9 @@ export default class UserController extends Controller {
     // 参数验证
     await this.ctx.helper.validate(formData, {});
 
-    const uesr = await this.service.user.addUser(formData);
+    const user = await this.service.user.addUser(formData);
 
-    return this.ctx.helper.msgSuccess(uesr);
+    return this.ctx.helper.msgSuccess(user);
   }
 
   public async update() {
@@ -40,8 +40,8 @@ export default class UserController extends Controller {
       userId: { required: true },
     });
 
-    const uesr = await this.service.user.updateUser(formData);
-    return this.ctx.helper.msgSuccess(uesr);
+    const user = await this.service.user.updateUser(formData);
+    return this.ctx.helper.msgSuccess(user);
   }
 
   // public async detail() {}

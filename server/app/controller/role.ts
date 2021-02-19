@@ -22,8 +22,8 @@ export default class RoleController extends Controller {
       roleId: { required: true },
     });
 
-    const uesr = await this.service.role.updateRole(formData);
-    return this.ctx.helper.msgSuccess(uesr);
+    const user = await this.service.role.updateRole(formData);
+    return this.ctx.helper.msgSuccess(user);
   }
 
   // public async detail() {}

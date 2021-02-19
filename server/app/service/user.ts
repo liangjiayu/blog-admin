@@ -29,20 +29,20 @@ export default class User extends Service {
   public async addUser(params) {
     const { username, password, roleId } = params;
 
-    const uesr = this.ctx.model.User.create({
+    const user = this.ctx.model.User.create({
       username,
       password,
       roleId: Number(roleId),
     });
 
-    return uesr;
+    return user;
   }
 
   public async updateUser(params) {
     const userId = Number(params.userId);
 
-    const uesr = await this.ctx.model.User.findByPk(userId);
-    if (!uesr) {
+    const user = await this.ctx.model.User.findByPk(userId);
+    if (!user) {
       throw new Error('暂无该用户');
     }
 
@@ -52,20 +52,20 @@ export default class User extends Service {
       roleId: params.roleId,
     };
 
-    await uesr.update(content);
+    await user.update(content);
 
-    return uesr;
+    return user;
   }
 
   public async delUserById(userId) {
     const _userId = Number(userId);
 
-    const uesr = await this.ctx.model.User.findByPk(_userId);
+    const user = await this.ctx.model.User.findByPk(_userId);
 
-    if (!uesr) {
+    if (!user) {
       throw new Error('暂无该用户');
     }
-    await uesr.destroy();
+    await user.destroy();
 
     return true;
   }
@@ -92,11 +92,11 @@ export default class User extends Service {
 
   public async getInfoByToken() {
     const tokenInfo = this.ctx.tokenInfo;
-    const uesr = await this.ctx.model.User.findByPk(tokenInfo.userId);
+    const user = await this.ctx.model.User.findByPk(tokenInfo.userId);
     const role = await this.ctx.model.Role.findByPk(tokenInfo.roleId);
 
     return {
-      uesr,
+      user,
       role,
     };
   }
