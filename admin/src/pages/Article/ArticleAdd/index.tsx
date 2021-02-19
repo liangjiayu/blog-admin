@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { history } from 'umi';
 import { Form, Input, Button, Card, message } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { getArticleInfo, updateArticleInfo, addArticle } from '@/services/article';
+import { getArticleInfo, updateArticleInfo, addArticle } from '@/api/article';
 
 const IndexView = () => {
   const [form] = Form.useForm();

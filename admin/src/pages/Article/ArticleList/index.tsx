@@ -3,25 +3,24 @@ import React, { useState, useEffect } from 'react';
 import { history } from 'umi';
 import { Table, Button, Card, Space, Popconfirm } from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import { getArticleList, delArticle } from '@/services/article';
 
+import { getArticleList, delArticle } from '@/api/article';
 import SearchMore from './components/SearchMore';
-
-let listParams = {
-  pageSize: 10,
-  pageNum: 1,
-  keyword: undefined,
-};
 
 const IndexView = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(false);
   const [pages, setPages] = useState({ current: 1, pageSize: 10, total: 0 });
+  const [listFilter, setListFilter] = useState({ keyword: undefined });
 
-  const fetchList = () => {
-    // console.log(listParams);
+  const fetchList = (params = {}) => {
+    const baseParams = {
+      pageSize: 10,
+      pageNum: 1,
+      // keyword: undefined,
+    };
     setLoading(true);
-    getArticleList({ ...listParams }).then((res) => {
+    getArticleList({ ...baseParams, ...params }).then((res) => {
       setLoading(false);
       const { data } = res;
       setList(data.rows);
@@ -34,29 +33,31 @@ const IndexView = () => {
   };
 
   const onSearch = (values) => {
-    listParams = {
-      pageSize: listParams.pageSize,
+    fetchList({
+      pageSize: pages.pageSize,
       pageNum: 1,
       ...values,
-    };
-    fetchList();
+    });
+    setListFilter({ ...values });
   };
 
   const onChangeTable = (pagination: any) => {
-    listParams.pageSize = pagination.pageSize;
-    listParams.pageNum = pagination.current;
-    fetchList();
+    fetchList({
+      pageSize: pagination.pageSize,
+      pageNum: pagination.current,
+      ...listFilter,
+    });
   };
 
   const onDelete = (id) => {
     setLoading(true);
     delArticle({ id }).then(() => {
-      fetchList();
+      fetchList({});
     });
   };
 
   useEffect(() => {
-    fetchList();
+    fetchList({});
   }, []);
 
   const columns = [
@@ -116,7 +117,7 @@ const IndexView = () => {
   return (
     <PageHeaderWrapper>
       <Card>
-        <SearchMore onSearch={onSearch} formData={listParams}></SearchMore>
+        <SearchMore onSearch={onSearch}></SearchMore>
         <div className="site-toolbar">
           <Button
             type="primary"
@@ -131,7 +132,7 @@ const IndexView = () => {
           columns={columns}
           dataSource={list}
           rowKey="id"
-          pagination={pages}
+          pagination={{ showSizeChanger: true, ...pages }}
           loading={loading}
           onChange={onChangeTable}
         />
