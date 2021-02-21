@@ -17,7 +17,6 @@ export default (app: Application) => {
   router.post('/api/user/list', controller.user.list);
   router.post('/api/user/getInfoByToken', controller.user.getInfoByToken);
 
-
   // role
   router.post('/api/role/create', controller.role.create);
   router.post('/api/role/update', controller.role.update);
@@ -65,4 +64,6 @@ export default (app: Application) => {
   router.post('/api/dictItem/del', controller.dictionaryItem.del);
   router.post('/api/dictItem/all', controller.dictionaryItem.all);
 
+  // base
+  router.post('/api/base/checkOnly', controller.base.checkOnly);
 };

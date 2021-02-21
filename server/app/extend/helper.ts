@@ -15,7 +15,7 @@ export default {
       msg: 'success',
       ...option,
     };
-    this.ctx.status = _option.code;
+    this.ctx.status = 200;
 
     this.ctx.body = {
       code: _option.code,
@@ -37,7 +37,7 @@ export default {
       data: null,
       ...option,
     };
-    this.ctx.status = _option.code;
+    this.ctx.status = 200;
     this.ctx.body = {
       code: _option.code,
       data: _option.data,
