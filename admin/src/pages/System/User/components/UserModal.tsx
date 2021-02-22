@@ -75,6 +75,9 @@ const UserModal: React.FC<UserModalProps> = (props) => {
               { required: true },
               {
                 validator: async (rule, value) => {
+                  if (props.current) {
+                    return;
+                  }
                   if (!value) {
                     return;
                   }
@@ -91,7 +94,7 @@ const UserModal: React.FC<UserModalProps> = (props) => {
               },
             ]}
           >
-            <Input />
+            <Input readOnly={props.current} />
           </Form.Item>
 
           {!props.current && (

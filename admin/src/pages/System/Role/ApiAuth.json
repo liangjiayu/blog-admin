@@ -5,7 +5,11 @@
     "children": [
       {
         "name": "新增用户",
-        "value": "user:add"
+        "value": "user:create"
+      },
+      {
+        "name": "编辑用户",
+        "value": "user:update"
       },
       {
         "name": "删除用户",
@@ -19,7 +23,11 @@
     "children": [
       {
         "name": "新增角色",
-        "value": "role:add"
+        "value": "role:create"
+      },
+      {
+        "name": "编辑角色",
+        "value": "role:update"
       },
       {
         "name": "删除角色",

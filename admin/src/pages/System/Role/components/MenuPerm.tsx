@@ -8,6 +8,9 @@ const transferMenu = (data: any[] = []) => {
     if (!item.name || !item.path) {
       return;
     }
+    if (item.access !== 'roleAuth') {
+      return;
+    }
     // if (item.hideInMenu) {
     //   return;
     // }

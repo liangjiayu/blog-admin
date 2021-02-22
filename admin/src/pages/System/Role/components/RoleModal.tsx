@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Form, Input, Modal } from 'antd';
 
 import { addRole, updateRole } from '@/api/role';
+import { checkOnly } from '@/api/base';
 
 type RoleModalProps = {
   onCancel: () => void;
@@ -22,9 +23,9 @@ const RoleModal: React.FC<RoleModalProps> = (props) => {
 
   const onFinish = (values: any) => {
     if (props.current?.roleId) {
-      updateRole({ ...values, roleId: props.current.roleId }).then(()=>{
+      updateRole({ ...values, roleId: props.current.roleId }).then(() => {
         props.onSuccess();
-      })
+      });
     } else {
       addRole(values).then(() => {
         props.onSuccess();
@@ -52,8 +53,33 @@ const RoleModal: React.FC<RoleModalProps> = (props) => {
           preserve={false}
           initialValues={{}}
         >
-          <Form.Item label="角色编码" name="roleCode" rules={[{ required: true }]}>
-            <Input />
+          <Form.Item
+            label="角色编码"
+            name="roleCode"
+            rules={[
+              { required: true },
+              {
+                validator: async (rule, value) => {
+                  if (props.current) {
+                    return;
+                  }
+                  if (!value) {
+                    return;
+                  }
+                  await checkOnly({
+                    tableName: 'Role',
+                    fieldName: 'roleCode',
+                    fieldVal: value,
+                  }).then((res) => {
+                    if (res.code !== 200) {
+                      throw new Error('角色编码已重复');
+                    }
+                  });
+                },
+              },
+            ]}
+          >
+            <Input readOnly={props.current} />
           </Form.Item>
 
           <Form.Item label="角色名称" name="roleName" rules={[{ required: true }]}>

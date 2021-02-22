@@ -9,18 +9,38 @@ export default (app: Application) => {
   router.post('/api/user/login', controller.user.login);
   router.post(
     '/api/user/create',
-    middleware.authApi([ 'user:add' ]),
+    middleware.authApi([ 'user:create' ]),
     controller.user.create,
   );
-  router.post('/api/user/update', controller.user.update);
-  router.post('/api/user/del', controller.user.del);
+  router.post(
+    '/api/user/update',
+    middleware.authApi([ 'user:update' ]),
+    controller.user.update,
+  );
+  router.post(
+    '/api/user/del',
+    middleware.authApi([ 'user:del' ]),
+    controller.user.del,
+  );
   router.post('/api/user/list', controller.user.list);
   router.post('/api/user/getInfoByToken', controller.user.getInfoByToken);
 
   // role
-  router.post('/api/role/create', controller.role.create);
-  router.post('/api/role/update', controller.role.update);
-  router.post('/api/role/del', controller.role.del);
+  router.post(
+    '/api/role/create',
+    middleware.authApi([ 'role:create' ]),
+    controller.role.create,
+  );
+  router.post(
+    '/api/role/update',
+    middleware.authApi([ 'role:update' ]),
+    controller.role.update,
+  );
+  router.post(
+    '/api/role/del',
+    middleware.authApi([ 'role:del' ]),
+    controller.role.del,
+  );
   router.post('/api/role/list', controller.role.list);
   router.post('/api/role/all', controller.role.all);
 

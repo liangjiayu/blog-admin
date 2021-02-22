@@ -14,11 +14,5 @@ module.exports = app => {
     {},
   );
 
-  // User.associate = function() {
-  //   app.model.User.belongsTo(app.model.Role, {
-  //     foreignKey: 'roleId',
-  //   });
-  // };
-
   return User;
 };
