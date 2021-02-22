@@ -49,10 +49,10 @@ const UserView = () => {
       title: '用户名称',
       dataIndex: 'username',
     },
-    {
-      title: '角色名称',
-      dataIndex: 'roleId',
-    },
+    // {
+    //   title: '角色名称',
+    //   dataIndex: 'roleId',
+    // },
     {
       title: '创建时间',
       dataIndex: 'createdAt',

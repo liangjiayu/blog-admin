@@ -3,6 +3,7 @@ import { Form, Input, Modal, Select } from 'antd';
 
 import { addUser, updateUser } from '@/api/user';
 import { getRoleAll } from '@/api/role';
+import { checkOnly } from '@/api/base';
 
 type UserModalProps = {
   onCancel: () => void;
@@ -67,13 +68,47 @@ const UserModal: React.FC<UserModalProps> = (props) => {
           preserve={false}
           initialValues={{}}
         >
-          <Form.Item label="用户名" name="username" rules={[{ required: true }]}>
+          <Form.Item
+            label="用户名"
+            name="username"
+            rules={[
+              { required: true },
+              {
+                validator: async (rule, value) => {
+                  if (!value) {
+                    return;
+                  }
+                  await checkOnly({
+                    tableName: 'User',
+                    fieldName: 'username',
+                    fieldVal: value,
+                  }).then((res) => {
+                    if (res.code !== 200) {
+                      throw new Error('用户名称已重复');
+                    }
+                  });
+                },
+              },
+            ]}
+          >
             <Input />
           </Form.Item>
 
-          <Form.Item label="密码" name="password" rules={[{ required: true }]}>
-            <Input />
-          </Form.Item>
+          {!props.current && (
+            <Form.Item
+              label="密码"
+              name="password"
+              rules={[
+                {
+                  required: true,
+                  pattern: /^[a-zA-Z0-9]{6,12}$/,
+                  message: '密码由数字或者字母组成，长度为6～12位',
+                },
+              ]}
+            >
+              <Input.Password autoComplete="new-password" />
+            </Form.Item>
+          )}
 
           <Form.Item label="角色" name="roleId" rules={[{ required: true }]}>
             <Select options={roleList}></Select>
