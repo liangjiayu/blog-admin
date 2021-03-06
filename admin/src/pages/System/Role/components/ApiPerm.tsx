@@ -33,7 +33,14 @@ const ApiPerm: React.FC<ApiPermProps> = (props) => {
   };
 
   const onSubmit = () => {
-    updateRole({ roleId: props.current.roleId, apiPerm: checkedKeys.join() }).then(() => {
+    updateRole({
+      roleId: props.current.roleId,
+      apiPerm: checkedKeys
+        .filter((i: string) => {
+          return i.includes(':');
+        })
+        .join(),
+    }).then(() => {
       message.success('提交成功');
       props.onSuccess();
     });

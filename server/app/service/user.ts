@@ -21,6 +21,7 @@ export default class User extends Service {
     const token = jwt.sign(
       { userId: user.userId, roleId: user.roleId },
       secretKey,
+      { expiresIn: 12 * 60 * 60 },
     );
 
     return { token };

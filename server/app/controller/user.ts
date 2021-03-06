@@ -16,7 +16,7 @@ export default class UserController extends Controller {
 
     const result = await this.service.user.signIn(formData);
 
-    this.ctx.helper.msgSuccess(result);
+    this.ctx.helper.resultOkData(result);
   }
 
   public async create() {

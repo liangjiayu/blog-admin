@@ -1,7 +1,7 @@
 import React from 'react';
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
 import { PageLoading } from '@ant-design/pro-layout';
-import { notification } from 'antd';
+import { message } from 'antd';
 import type { RequestConfig, RunTimeLayoutConfig } from 'umi';
 import { history } from 'umi';
 import RightContent from '@/components/RightContent';
@@ -26,13 +26,17 @@ export async function getInitialState(): Promise<{
 }> {
   // 如果是登录页面，不执行
   if (history.location.pathname !== '/login') {
-    const { data: userInfo } = await getInfoByToken({});
-    return {
-      token: getStore('TOKEN'),
-      userInfo: userInfo.user,
-      roleInfo: userInfo.role,
-      settings: defaultSettings,
-    };
+    try {
+      const { data: userInfo } = await getInfoByToken({});
+      return {
+        token: getStore('TOKEN'),
+        userInfo: userInfo.user,
+        roleInfo: userInfo.role,
+        settings: defaultSettings,
+      };
+    } catch (error) {
+      history.push('/login');
+    }
   }
 
   return {
@@ -85,22 +89,19 @@ const codeMessage = {
  * 异常处理程序
  */
 const errorHandler = (error: ResponseError) => {
-  const { response } = error;
-  if (response && response.status) {
-    const errorText = codeMessage[response.status] || response.statusText;
-    const { status, url } = response;
+  const { response, data } = error;
 
-    notification.error({
-      message: `请求错误 ${status}: ${url}`,
-      description: errorText,
-    });
+  if (data && data.code === 1000) {
+    history.push('/login');
+  }
+
+  if (data) {
+    const errorText = data.msg || codeMessage[response.status];
+    message.error(errorText);
   }
 
   if (!response) {
-    notification.error({
-      description: '您的网络发生异常，无法连接服务器',
-      message: '网络异常',
-    });
+    message.error('您的网络发生异常，无法连接服务器');
   }
   throw error;
 };

@@ -31,7 +31,7 @@ export default () => {
       ctx.tokenInfo = tokenInfo;
       await next();
     } catch (error) {
-      ctx.throw(401, error.message);
+      ctx.helper.resultError({ status: 401, msg: '登录令牌无效', code: 1000 });
     }
   };
 };
