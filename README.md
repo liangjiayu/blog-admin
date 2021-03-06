@@ -32,5 +32,11 @@
 
 
 
+## 项目依赖
+
+- Node.js 8.x
+- Typescript 2.8+
+- sequelize
+
 
 
