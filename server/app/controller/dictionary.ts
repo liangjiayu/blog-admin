@@ -10,7 +10,7 @@ export default class Dictionary extends Controller {
 
     const dict = await this.service.dictionary.addDict(formData);
 
-    return this.ctx.helper.msgSuccess(dict);
+    return this.ctx.helper.resultOkData(dict);
   }
 
   public async update() {
@@ -23,7 +23,7 @@ export default class Dictionary extends Controller {
     });
 
     const dict = await this.service.dictionary.updateDict(formData);
-    return this.ctx.helper.msgSuccess(dict);
+    return this.ctx.helper.resultOkData(dict);
   }
 
   // public async detail() {}
@@ -38,7 +38,7 @@ export default class Dictionary extends Controller {
     });
 
     await this.service.dictionary.delDictById(formData.dictId);
-    return this.ctx.helper.msgSuccess();
+    return this.ctx.helper.resultOkData();
   }
 
   public async list() {
@@ -46,6 +46,6 @@ export default class Dictionary extends Controller {
     const formData = ctx.request.body;
 
     const result = await this.service.dictionary.getDictList(formData);
-    return this.ctx.helper.msgSuccess(result);
+    return this.ctx.helper.resultOkData(result);
   }
 }

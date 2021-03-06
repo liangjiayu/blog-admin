@@ -20,7 +20,7 @@ export default class ArticleController extends Controller {
 
     const article = await this.service.article.addArticle(formData);
 
-    return this.ctx.helper.msgSuccess(article);
+    return this.ctx.helper.resultOkData(article);
   }
 
   /**
@@ -36,7 +36,7 @@ export default class ArticleController extends Controller {
     });
 
     const article = await this.service.article.updateArticle(formData);
-    return this.ctx.helper.msgSuccess(article);
+    return this.ctx.helper.resultOkData(article);
   }
 
   /**
@@ -53,7 +53,7 @@ export default class ArticleController extends Controller {
 
     const article = await this.service.article.getArticleById(formData.id);
 
-    return this.ctx.helper.msgSuccess(article);
+    return this.ctx.helper.resultOkData(article);
   }
 
   /**
@@ -69,7 +69,7 @@ export default class ArticleController extends Controller {
     });
 
     await this.service.article.delArticleById(formData.id);
-    return this.ctx.helper.msgSuccess();
+    return this.ctx.helper.resultOkData();
   }
 
   /**
@@ -80,6 +80,6 @@ export default class ArticleController extends Controller {
     const formData = ctx.request.body;
 
     const result = await this.service.article.getArticleList(formData);
-    return this.ctx.helper.msgSuccess(result);
+    return this.ctx.helper.resultOkData(result);
   }
 }

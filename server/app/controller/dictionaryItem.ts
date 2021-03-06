@@ -12,7 +12,7 @@ export default class DictionaryItem extends Controller {
 
     const dictItem = await this.service.dictionaryItem.addDictItem(formData);
 
-    return this.ctx.helper.msgSuccess(dictItem);
+    return this.ctx.helper.resultOkData(dictItem);
   }
 
   public async update() {
@@ -25,7 +25,7 @@ export default class DictionaryItem extends Controller {
     });
 
     const dict = await this.service.dictionaryItem.updateDictItem(formData);
-    return this.ctx.helper.msgSuccess(dict);
+    return this.ctx.helper.resultOkData(dict);
   }
 
   public async del() {
@@ -38,7 +38,7 @@ export default class DictionaryItem extends Controller {
     });
 
     await this.service.dictionaryItem.delDictItemById(formData.dictItemId);
-    return this.ctx.helper.msgSuccess();
+    return this.ctx.helper.resultOkData();
   }
 
   public async all() {
@@ -46,6 +46,6 @@ export default class DictionaryItem extends Controller {
     const formData = ctx.request.body;
 
     const result = await this.service.dictionaryItem.getAllDictItem(formData);
-    return this.ctx.helper.msgSuccess(result);
+    return this.ctx.helper.resultOkData(result);
   }
 }

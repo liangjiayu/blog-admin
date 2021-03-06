@@ -3,49 +3,6 @@ import Schema from 'async-validator';
 
 export default {
   /**
-   * 处理成功，统一返回给客户端数据结构
-   * @param this helper
-   * @param data 实体
-   * @param option 配置
-   * @example {code:200,msg:'success',data:null}
-   */
-  msgSuccess(this: IHelper, data: any = null, option = {}) {
-    const _option = {
-      code: 200,
-      msg: 'success',
-      ...option,
-    };
-    this.ctx.status = 200;
-
-    this.ctx.body = {
-      code: _option.code,
-      msg: _option.msg,
-      data,
-    };
-  },
-
-  /**
-   *  处理异常，统一返回给客户端的数据结构
-   * @param this helper
-   * @param msg 信息
-   * @param option 配置
-   * @example {code:400,msg:'error',data:null}
-   */
-  msgError(this: IHelper, msg = '系统错误', option = {}) {
-    const _option = {
-      code: 400,
-      data: null,
-      ...option,
-    };
-    this.ctx.status = 200;
-    this.ctx.body = {
-      code: _option.code,
-      data: _option.data,
-      msg,
-    };
-  },
-
-  /**
    * 验证参数方法
    * https://github.com/yiminghe/async-validator
    * @param this helper
@@ -109,7 +66,7 @@ export default {
   ) {
     const _option = {
       status: 200, // http code
-      code: 2000, // 业务code 2000-默认成功
+      code: 2000, // 业务code 2000-默认成功  2001字段重复
       msg: '请求成功',
       success: true,
       data: null,

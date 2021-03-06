@@ -17,9 +17,12 @@ export default class BaseController extends Controller {
     });
 
     if (item) {
-      this.ctx.helper.msgError('该值不可用，系统中已存在！');
+      this.ctx.helper.resultOk({
+        msg: '该值不可用，系统中已存在！',
+        code: 2001,
+      });
     } else {
-      this.ctx.helper.msgSuccess();
+      this.ctx.helper.resultOkData();
     }
   }
 }

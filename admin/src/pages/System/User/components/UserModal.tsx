@@ -86,7 +86,7 @@ const UserModal: React.FC<UserModalProps> = (props) => {
                     fieldName: 'username',
                     fieldVal: value,
                   }).then((res) => {
-                    if (res.code !== 200) {
+                    if (res.code !== 2000) {
                       throw new Error('用户名称已重复');
                     }
                   });

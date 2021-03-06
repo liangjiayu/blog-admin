@@ -28,7 +28,7 @@ export default class UserController extends Controller {
 
     const user = await this.service.user.addUser(formData);
 
-    return this.ctx.helper.msgSuccess(user);
+    return this.ctx.helper.resultOkData(user);
   }
 
   public async update() {
@@ -41,7 +41,7 @@ export default class UserController extends Controller {
     });
 
     const user = await this.service.user.updateUser(formData);
-    return this.ctx.helper.msgSuccess(user);
+    return this.ctx.helper.resultOkData(user);
   }
 
   // public async detail() {}
@@ -56,7 +56,7 @@ export default class UserController extends Controller {
     });
 
     await this.service.user.delUserById(formData.userId);
-    return this.ctx.helper.msgSuccess();
+    return this.ctx.helper.resultOkData();
   }
 
   public async list() {
@@ -64,12 +64,12 @@ export default class UserController extends Controller {
     const formData = ctx.request.body;
 
     const result = await this.service.user.getUserList(formData);
-    return this.ctx.helper.msgSuccess(result);
+    return this.ctx.helper.resultOkData(result);
   }
 
   public async getInfoByToken() {
     const result = await this.service.user.getInfoByToken();
 
-    return this.ctx.helper.msgSuccess(result);
+    return this.ctx.helper.resultOkData(result);
   }
 }

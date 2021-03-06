@@ -10,7 +10,7 @@ export default class RoleController extends Controller {
 
     const role = await this.service.role.addRole(formData);
 
-    return this.ctx.helper.msgSuccess(role);
+    return this.ctx.helper.resultOkData(role);
   }
 
   public async update() {
@@ -23,7 +23,7 @@ export default class RoleController extends Controller {
     });
 
     const user = await this.service.role.updateRole(formData);
-    return this.ctx.helper.msgSuccess(user);
+    return this.ctx.helper.resultOkData(user);
   }
 
   // public async detail() {}
@@ -38,7 +38,7 @@ export default class RoleController extends Controller {
     });
 
     await this.service.role.delRoleById(formData.roleId);
-    return this.ctx.helper.msgSuccess();
+    return this.ctx.helper.resultOkData();
   }
 
   public async list() {
@@ -46,11 +46,11 @@ export default class RoleController extends Controller {
     const formData = ctx.request.body;
 
     const result = await this.service.role.getRoleList(formData);
-    return this.ctx.helper.msgSuccess(result);
+    return this.ctx.helper.resultOkData(result);
   }
 
   public async all() {
     const result = await this.service.role.getAllRole();
-    return this.ctx.helper.msgSuccess(result);
+    return this.ctx.helper.resultOkData(result);
   }
 }
