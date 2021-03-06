@@ -1,24 +1,33 @@
-### 核心功能
+# hackernews-async-ts
 
-- 用户管理，字典管理，角色管理
-- 接口权限，用户token验证，字段校验器
-- 基础的通用crud代码
-- 返回统一的数据接口
+[Hacker News](https://news.ycombinator.com/) showcase using typescript && egg
 
+## QuickStart
 
+### Development
 
-### 相关文档
+```bash
+$ npm i
+$ npm run dev
+$ open http://localhost:7001/
+```
 
-- [async-validator](https://github.com/yiminghe/async-validator)  检验规则
-- [sequelize](https://www.sequelize.com.cn/)  数据库
-- [eggjs](https://eggjs.org/zh-cn/) 框架，开发，部署，安全
-- [TypeScript](https://ts.xcatliu.com/)
+Don't tsc compile at development mode, if you had run `tsc` then you need to `npm run clean` before `npm run dev`.
 
+### Deploy
 
+```bash
+$ npm run tsc
+$ npm start
+```
 
-### 开发依赖
+### Npm Scripts
+
+- Use `npm run lint` to check code style
+- Use `npm test` to run unit test
+- se `npm run clean` to clean compiled js at development mode once
+
+### Requirement
 
 - Node.js 8.x
 - Typescript 2.8+
-- sequelize
-
