@@ -88,7 +88,7 @@ const codeMessage = {
 /**
  * 异常处理程序
  */
-const errorHandler = (error: ResponseError) => {
+const errorHandler = (error: ResponseError) => {  
   const { response, data } = error;
 
   if (data && data.code === 1000) {
@@ -100,9 +100,10 @@ const errorHandler = (error: ResponseError) => {
     message.error(errorText);
   }
 
-  if (!response) {
+  if (!data) {
     message.error('您的网络发生异常，无法连接服务器');
   }
+  
   throw error;
 };
 
