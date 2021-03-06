@@ -71,7 +71,7 @@ const RoleModal: React.FC<RoleModalProps> = (props) => {
                     fieldName: 'roleCode',
                     fieldVal: value,
                   }).then((res) => {
-                    if (res.code !== 200) {
+                    if (res.code !== 2000) {
                       throw new Error('角色编码已重复');
                     }
                   });
